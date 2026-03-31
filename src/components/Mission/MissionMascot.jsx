@@ -22,13 +22,14 @@ const MissionMascot = ({ message, type = 'info', isProactive = false, emotion = 
     }, [message]);
 
     const getAvatarUrl = () => {
-        const base = "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=NEO&backgroundColor=06b6d4";
+        // Using stable bottts style with specific features for NEO
+        const base = "https://api.dicebear.com/7.x/bottts/svg?seed=NeoCV&backgroundColor=06b6d4";
         const emotions = {
-            happy: "&eyes=eyes12&mouth=mouth01",
-            thinking: "&eyes=eyes01&mouth=mouth03",
-            surprised: "&eyes=eyes08&mouth=mouth05",
-            excited: "&eyes=eyes10&mouth=mouth02",
-            stern: "&eyes=eyes04&mouth=mouth01"
+            happy: "&eyes=eyes12&mouth=mouth01&face=face01",
+            thinking: "&eyes=eyes01&mouth=mouth03&face=face02",
+            surprised: "&eyes=eyes08&mouth=mouth05&face=face03",
+            excited: "&eyes=eyes10&mouth=mouth02&face=face01",
+            stern: "&eyes=eyes04&mouth=mouth01&face=face02"
         };
         return base + (emotions[emotion] || emotions.happy);
     };
