@@ -1,0 +1,58 @@
+.hud-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1005;
+    padding-bottom: 2rem;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+.hud-nav-inner {
+    display: flex;
+    gap: 1rem;
+    background: rgba(5, 10, 14, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 2rem;
+    border-top: 1px solid var(--hud-blue);
+    border-left: 1px solid var(--hud-blue-low);
+    border-right: 1px solid var(--hud-blue-low);
+    clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%);
+    box-shadow: 0 -10px 30px rgba(0, 255, 245, 0.1);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    min-width: 80px;
+}
+
+.nav-item span {
+    font-weight: 700;
+}
+
+.nav-item:hover {
+    color: var(--hud-blue);
+    text-shadow: 0 0 10px var(--hud-blue);
+}
+
+.nav-item.active {
+    color: var(--hud-blue);
+    background: var(--hud-blue-low);
+    border-bottom: 2px solid var(--hud-blue);
+}
+
+.nav-item.active svg {
+    filter: drop-shadow(0 0 5px var(--hud-blue));
+}

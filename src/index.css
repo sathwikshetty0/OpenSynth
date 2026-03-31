@@ -1,0 +1,131 @@
+@import './styles/theme.css';
+
+:root {
+    font-family: var(--font-heading);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 120px;
+}
+
+.mission-console {
+    border-radius: 16px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-text {
+    text-shadow: 0 0 12px var(--hud-blue);
+    color: var(--hud-blue);
+    font-weight: 500;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.panel:hover {
+    transform: translateY(-2px);
+    border-color: rgba(6, 182, 212, 0.2);
+    box-shadow: 0 12px 40px rgba(6, 182, 212, 0.1);
+}
+
+/* Let's keep a tiny tech corner accent instead of the huge ones */
+.panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 20px;
+    width: 30px;
+    height: 1px;
+    background: var(--hud-blue);
+    box-shadow: var(--glow-shadow);
+}
+
+.panel::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: 20px;
+    width: 30px;
+    height: 1px;
+    background: var(--accent-purple);
+    box-shadow: 0 0 15px var(--accent-purple);
+}
+
+button {
+    cursor: pointer;
+    background: rgba(6, 182, 212, 0.05);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: var(--hud-blue);
+    padding: 0.6rem 1.2rem;
+    font-family: inherit;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.85rem;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+button:hover {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: var(--hud-blue);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    background: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.terminal-text {
+    font-family: var(--font-code);
+    color: var(--neon-green);
+    letter-spacing: 0.5px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.6);
+}

@@ -1,0 +1,116 @@
+.skill-tree-container {
+    padding: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+}
+
+.skill-tree-container .title {
+    text-align: center;
+    margin-bottom: 4rem;
+    letter-spacing: 5px;
+}
+
+.nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    z-index: 5;
+    position: relative;
+}
+
+.node-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--hud-blue-low);
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    overflow: hidden;
+}
+
+.node-card.locked {
+    cursor: not-allowed;
+    opacity: 0.6;
+    filter: grayscale(1);
+}
+
+.node-card.unlocked:hover {
+    border-color: var(--hud-blue);
+    box-shadow: 0 0 20px var(--hud-blue-low);
+    transform: translateY(-5px);
+}
+
+.node-card.completed {
+    border-color: var(--neon-green);
+}
+
+.node-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--hud-blue-low);
+}
+
+.node-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.node-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.difficulty.easy {
+    color: var(--neon-green);
+}
+
+.difficulty.medium {
+    color: var(--alert-orange);
+}
+
+.difficulty.hard {
+    color: #ff3535;
+}
+
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #ff3535;
+    transform: rotate(-15deg) scale(1.5);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.node-card.locked:hover .locked-overlay {
+    opacity: 1;
+}
+
+.background-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
