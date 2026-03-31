@@ -28,22 +28,36 @@ const ConceptVisualizer = ({ moduleId }) => {
     }, [useCamera]);
 
     const getStyle = () => {
+        const factor = sliderVal / 10;
         switch (moduleId) {
             case 'images_pixels':
-                return { filter: `contrast(${100 + sliderVal * 15}%) brightness(${100 + sliderVal * 5}%)` };
+                return { filter: `contrast(${100 + sliderVal * 15}%) brightness(${80 + sliderVal * 5}%)` };
             case 'color_spaces':
-                return { filter: `grayscale(${sliderVal * 15}%) hue-rotate(${sliderVal * 15}deg) sepia(${sliderVal > 10 ? 50 : 0}%)` };
+                return { filter: `grayscale(${sliderVal * 5}%) hue-rotate(${sliderVal * 18}deg)` };
             case 'blurring_filters':
-                return { filter: `blur(${sliderVal * 0.8}px) contrast(110%)` };
+                return { filter: `blur(${sliderVal * 0.8}px) contrast(${100 + sliderVal}%)` };
             case 'edge_detection':
-                return { filter: `contrast(1000%) grayscale(100%) invert(${sliderVal > 5 ? 100 : 0}%) brightness(${100 + sliderVal * 10}%)` };
+                return { filter: `grayscale(1) contrast(1000%) invert(${sliderVal > 10 ? 100 : 0}%) brightness(${sliderVal * 5}%)` };
             case 'thresholding':
-                return { filter: `threshold(0.5) contrast(1000%) grayscale(100%)` };
+                // Real threshold effect: High contrast + varying brightness
+                return { filter: `grayscale(1) contrast(2000%) brightness(${0.2 + (sliderVal/10)} )` };
             case 'contours':
-                return { filter: `contrast(1000%) grayscale(100%) blur(1px) brightness(1.2) hue-rotate(90deg) saturate(500%)` };
+                return { filter: `grayscale(1) contrast(1000%) invert(1) sepia(1) hue-rotate(${sliderVal * 20}deg) saturate(1000%)` };
             default:
                 return {};
         }
+    };
+
+    const getModuleImage = () => {
+        const images = {
+            'images_pixels': 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80', // CPU/Circuit
+            'color_spaces': 'https://images.unsplash.com/photo-1493246507139-91e8bef99c02?auto=format&fit=crop&w=600&q=80', // Colorful Mountains
+            'blurring_filters': 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=600&q=80', // Starry Night (Detailed)
+            'edge_detection': 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?auto=format&fit=crop&w=600&q=80', // High contrast architecture
+            'thresholding': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80', // Binary-like code
+            'contours': 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80' // Complex structural shapes
+        };
+        return images[moduleId] || images['images_pixels'];
     };
 
     return (
@@ -64,10 +78,7 @@ const ConceptVisualizer = ({ moduleId }) => {
                         {useCamera ? (
                             <video ref={rawVideoRef} autoPlay playsInline muted />
                         ) : (
-                            <img
-                                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400"
-                                alt="Original"
-                            />
+                            <img src={getModuleImage()} alt="Original" />
                         )}
                         <div className="scan-line-anim"></div>
                     </div>
@@ -79,10 +90,7 @@ const ConceptVisualizer = ({ moduleId }) => {
                         {useCamera ? (
                             <video ref={processedVideoRef} autoPlay playsInline muted />
                         ) : (
-                            <img
-                                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400"
-                                alt="Processed"
-                            />
+                            <img src={getModuleImage()} alt="Processed" />
                         )}
                     </div>
                     <span className="terminal-text">OPENCV_PERCEPTION_LAYER</span>
