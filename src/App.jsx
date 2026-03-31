@@ -10,6 +10,7 @@ import Mission from './components/Mission/Mission';
 import Leaderboard from './components/Leaderboard';
 import Badges from './components/Badges';
 import Settings from './components/Settings';
+import Certification from './components/Certification/Certification';
 
 // Context
 export const GameContext = createContext();
@@ -36,6 +37,13 @@ function App() {
                             <Route path="/leaderboard" element={<Leaderboard />} />
                             <Route path="/badges" element={<Badges />} />
                             <Route path="/settings" element={<Settings />} />
+                            <Route path="/certification" element={
+                                <Certification 
+                                    player={gameState.state.player} 
+                                    rank={gameState.rank} 
+                                    onBack={() => window.location.href = '/badges'} 
+                                />
+                            } />
                             <Route path="*" element={<Navigate to="/dashboard" />} />
                         </Routes>
                     </main>
