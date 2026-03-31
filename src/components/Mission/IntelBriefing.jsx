@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Info, Play } from 'lucide-react';
+import MissionMascot from './MissionMascot';
 
 const IntelBriefing = ({ mission, onComplete }) => {
     const [typedTheory, setTypedTheory] = useState([]);
@@ -20,6 +21,11 @@ const IntelBriefing = ({ mission, onComplete }) => {
 
     return (
         <div className="intel-container">
+            <MissionMascot 
+                message={`Neural link established. I am NEO. I've analyzed the ${mission.title} data clusters. Pay close attention to the technical specs below before we deploy the field simulation.`}
+                isProactive={true}
+                type="system"
+            />
             <div className="intel-text-panel panel">
                 <div className="intel-header-meta">
                     <span className="status-tag pulse">SYSTEM_READY</span>
