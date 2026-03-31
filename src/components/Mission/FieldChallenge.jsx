@@ -21,7 +21,10 @@ const FieldChallenge = ({ challenge, onComplete, index, total }) => {
 
     const handleFillSubmit = (e) => {
         e.preventDefault();
-        const correct = inputValue.trim().toLowerCase() === challenge.answer.toLowerCase();
+        const expected = challenge.answer || challenge.correctCode;
+        if (!expected) return;
+
+        const correct = inputValue.trim().toLowerCase() === expected.toLowerCase();
         setIsCorrect(correct);
         setTimeout(() => {
             onComplete(correct, showHint);
