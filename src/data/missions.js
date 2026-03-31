@@ -6,15 +6,15 @@ export const missions = [
         difficulty: "Easy",
         estimatedTime: "5 min",
         theory: {
-            goal: "Find boundaries where pixel intensity changes.",
-            algorithm: "Representing visuals as numerical arrays.",
-            code: "import cv2\nimg = cv2.imread('image.jpg')\nprint(img.shape)",
+            goal: "Master how images are represented numerically as matrices and how OpenCV interacts with them.",
+            algorithm: "Pixels & Intensity Mapping.",
+            code: "import cv2\nimage = cv2.imread('data.png')\n# img[y, x] gives BGR values\nprint(f'Pixel at (0,0): {image[0, 0]}')",
             details: [
-                "An image is a NumPy array",
-                "Shape = height × width × channels",
-                "Pixel values range 0–255",
-                "OpenCV loads images as BGR",
-                "cv2.imread() loads an image"
+                "An image is fundamentally a NumPy array (matrix of numbers)",
+                "Shape convention is height (rows) × width (columns) × depth (BGR channels)",
+                "Intensity ranges from 0 (total darkness) to 255 (full saturation)",
+                "OpenCV swaps the standard RGB order to BGR (Blue-Green-Red)",
+                "Coordinate (0,0) is located at the top-left corner of the image display"
             ]
         },
         challenges: [
@@ -41,9 +41,24 @@ export const missions = [
                 code: "cv2.imshow(img, 'window')",
                 correctCode: "cv2.imshow('window', img)",
                 hint: "The window name comes before the image data."
+            },
+            {
+                id: "pixels_4",
+                type: "mcq",
+                question: "Which color channel comes first in OpenCV's default format?",
+                options: ["Red", "Green", "Blue", "Alpha"],
+                correctAnswer: "Blue",
+                hint: "OpenCV uses BGR, not RGB."
+            },
+            {
+                id: "pixels_5",
+                type: "fill",
+                question: "Property to get height and width: image.____",
+                answer: "shape",
+                hint: "Returns a tuple of dimensions."
             }
         ],
-        nextModules: ["color_spaces", "transformations"]
+        nextModules: ["color_spaces"]
     },
     {
         id: "color_spaces",
@@ -53,14 +68,14 @@ export const missions = [
         estimatedTime: "7 min",
         prerequisites: ["images_pixels"],
         theory: {
-            goal: "Understanding how colors are represented.",
-            algorithm: "BGR vs RGB vs Gray.",
-            code: "gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)",
+            goal: "Learn to navigate between different mathematical representations of color.",
+            algorithm: "Color Conversion Logic.",
+            code: "gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nhsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)",
             details: [
-                "Red, Green, Blue channels",
-                "Grayscale = single channel (0-255)",
-                "HSV is better for color isolation",
-                "cv2.cvtColor handles conversions"
+                "Grayscale reduces computation by merging Red, Green, and Blue into one intensity channel",
+                "HSV (Hue, Saturation, Value) is superior for isolating specific colors regardless of lighting",
+                "Conversion is handled by the cvtColor() function using specific flags",
+                "OpenCV defaults to BGR, so RGB images often look blue if not converted"
             ]
         },
         challenges: [
@@ -79,6 +94,21 @@ export const missions = [
                 code: "gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)",
                 correctCode: "cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)",
                 hint: "OpenCV's default input is BGR."
+            },
+            {
+                id: "color_3",
+                type: "fill",
+                question: "Function for color conversion: cv2.____(img, flag)",
+                answer: "cvtColor",
+                hint: "Short for 'convert color'."
+            },
+            {
+                id: "color_4",
+                type: "mcq",
+                question: "Which color space is best for tracking a specific colored ball?",
+                options: ["Grayscale", "BGR", "HSV", "LAB"],
+                correctAnswer: "HSV",
+                hint: "Hue represents the color itself, isolated from brightness."
             }
         ],
         nextModules: ["blurring_filters"]
@@ -91,14 +121,14 @@ export const missions = [
         estimatedTime: "8 min",
         prerequisites: ["color_spaces"],
         theory: {
-            goal: "Reducing noise and smoothing images.",
-            algorithm: "Gaussian Blur.",
+            goal: "Clean sensor noise and smooth edges using convolution kernels.",
+            algorithm: "Spatial Filtering & Blurring.",
             code: "blur = cv2.GaussianBlur(img, (5, 5), 0)",
             details: [
-                "Kernels define area of influence",
-                "Gaussian distribution for smoothing",
-                "Median filter for salt & pepper noise",
-                "Bilateral filtering preserves edges"
+                "Kernels act as sliding windows that average pixel values with their neighbors",
+                "Gaussian Blur uses a weighted average (pixels closer to center have more weight)",
+                "Median Blur is the primary defense against 'Salt and Pepper' electronic noise",
+                "Kernel sizes MUST be odd positive integers (1, 3, 5, 7...) to have a central pixel"
             ]
         },
         challenges: [
@@ -121,6 +151,14 @@ export const missions = [
                 options: ["Gaussian", "Median", "Bilateral", "Box Filter"],
                 correctAnswer: "Median",
                 hint: "It replaces pixel values with the median of neighbors."
+            },
+            {
+                id: "blur_3",
+                type: "bug",
+                question: "Fix the illegal kernel size:",
+                code: "blur = cv2.blur(img, (4, 4))",
+                correctCode: "cv2.blur(img, (5, 5))",
+                hint: "Use the next available odd number for the kernel."
             }
         ],
         nextModules: ["edge_detection"]
@@ -133,14 +171,15 @@ export const missions = [
         estimatedTime: "10 min",
         prerequisites: ["blurring_filters"],
         theory: {
-            goal: "Detecting sudden changes in intensity.",
-            algorithm: "Canny Edge Detector.",
+            goal: "Extract structural features by detecting high gradients in pixel intensity.",
+            algorithm: "Canny Multi-Stage Detection.",
             code: "edges = cv2.Canny(img, 100, 200)",
             details: [
-                "Gradient calculation using Sobel",
-                "Non-maximum suppression for thin lines",
-                "Hysteresis thresholding",
-                "Lower and Upper thresholds"
+                "Noise reduction is performed first to avoid detecting 'fake' edges from noise",
+                "Gradient calculation identifies the direction and strength of intensity changes",
+                "Non-maximum suppression thins out the edges to 1-pixel width",
+                "Hysteresis uses two thresholds to decide which edges are strong enough to keep",
+                "Lower and Upper thresholds define the sensitivity to gray gradients"
             ]
         },
         challenges: [
@@ -159,9 +198,17 @@ export const missions = [
                 code: "edges = cv2.____(gray, 50, 150)",
                 answer: "Canny",
                 hint: "Named after John F. Canny."
+            },
+            {
+                id: "edge_3",
+                type: "mcq",
+                question: "What does a high gradient in an image indicate?",
+                options: ["Uniform color", "Low noise", "An edge or boundary", "Image corruption"],
+                correctAnswer: "An edge or boundary",
+                hint: "Gradient measures the 'steepness' of color change."
             }
         ],
-        nextModules: ["thresholding", "contours"]
+        nextModules: ["thresholding"]
     },
     {
         id: "thresholding",
@@ -171,14 +218,14 @@ export const missions = [
         estimatedTime: "6 min",
         prerequisites: ["edge_detection"],
         theory: {
-            goal: "Segmenting images based on intensity.",
-            algorithm: "Simple & Adaptive Thresholding.",
+            goal: "Convert complex grayscale images into binary (Black/White) maps for easier segmentation.",
+            algorithm: "Binary Pixel Segmentation.",
             code: "ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)",
             details: [
-                "Converts gray to binary (black/white)",
-                "Otsu's method for automatic thresholding",
-                "Adaptive thresholding for uneven lighting",
-                "Foreground vs Background separation"
+                "Binary thresholding replaces every pixel with either 0 or a Maximum value (255)",
+                "Otsu's Binarization automatically calculates the 'best' threshold value for the image",
+                "Adaptive thresholding calculates different thresholds for small regions to handle shadows",
+                "Thresholding is the precursor to contour detection and shape analysis"
             ]
         },
         challenges: [
@@ -209,14 +256,14 @@ export const missions = [
         estimatedTime: "12 min",
         prerequisites: ["thresholding"],
         theory: {
-            goal: "Finding outlines of objects.",
-            algorithm: "cv2.findContours().",
-            code: "contours, hire = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)",
+            goal: "Isolate and identify the shapes and hierarchies within detected boundaries.",
+            algorithm: "Topological Shape Analysis.",
+            code: "cnts, h = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)",
             details: [
-                "Input binary image",
-                "Hierarchy defines relationship between shapes",
-                "Approximation saves memory",
-                "Useful for object tracking"
+                "Contours connect continuous points having the same color/intensity",
+                "RETR_EXTERNAL only finds the outer-most shapes, ignoring holes",
+                "RETR_TREE creates a parent-child relationship for nested shapes",
+                "CHAIN_APPROX_SIMPLE saves memory by using only 4 points for a rectangle instead of hundreds"
             ]
         },
         challenges: [
@@ -235,6 +282,13 @@ export const missions = [
                 options: ["CHAIN_APPROX_NONE", "CHAIN_APPROX_SIMPLE", "RETR_EXTERNAL", "RETR_TREE"],
                 correctAnswer: "CHAIN_APPROX_SIMPLE",
                 hint: "It removes redundant points and compresses the contour."
+            },
+            {
+                id: "cont_3",
+                type: "fill",
+                question: "Function to visualize contours: cv2.____(img, cnts, -1, (0,255,0), 2)",
+                answer: "drawContours",
+                hint: "Inverse of finding them, it places them on canvas."
             }
         ]
     }
