@@ -80,9 +80,14 @@ const Mission = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
+                            className="intel-phase-layout"
                         >
-                            <IntelBriefing mission={mission} onComplete={handleIntelComplete} />
-                            <ConceptVisualizer moduleId={mission.id} />
+                            <div className="intel-info-side">
+                                <IntelBriefing mission={mission} onComplete={handleIntelComplete} />
+                            </div>
+                            <div className="intel-visual-side">
+                                <ConceptVisualizer moduleId={mission.id} />
+                            </div>
                         </motion.div>
                     )}
 
