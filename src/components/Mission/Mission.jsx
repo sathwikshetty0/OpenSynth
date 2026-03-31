@@ -27,7 +27,9 @@ const Mission = () => {
     const handleIntelComplete = () => setPhase(2);
 
     const handleChallengeComplete = (isCorrect, wasHintUsed) => {
-        if (isCorrect) setScore(s => s + 1);
+        if (!isCorrect) return; // Stay on the current challenge if wrong
+
+        setScore(s => s + 1);
         if (wasHintUsed) setHintsUsedCount(h => h + 1);
 
         if (currentChallengeIndex < mission.challenges.length - 1) {
@@ -35,7 +37,11 @@ const Mission = () => {
         } else {
             setPhase(3);
             // Award XP and complete
-            let calculatedXp = Math.floor(mission.xpReward * (score / mission.challenges.length));
+            // Initial score calculation based on first-try correctness could be complex, 
+            // but for now, we just proceed when they get it right.
+            let calculatedXp = mission.xpReward;
+            
+            // Penalty for hints used across all challenges
             if (hintsUsedCount > 0 || wasHintUsed) {
                 calculatedXp = Math.floor(calculatedXp * 0.7);
             }
