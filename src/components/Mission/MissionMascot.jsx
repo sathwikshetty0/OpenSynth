@@ -22,16 +22,16 @@ const MissionMascot = ({ message, type = 'info', isProactive = false, emotion = 
     }, [message]);
 
     const getAvatarUrl = () => {
-        // Using stable bottts style with specific features for NEO
-        const base = "https://api.dicebear.com/7.x/bottts/svg?seed=NeoCV&backgroundColor=06b6d4";
+        // Robohash is extremely reliable and fits the theme perfectly
         const emotions = {
-            happy: "&eyes=eyes12&mouth=mouth01&face=face01",
-            thinking: "&eyes=eyes01&mouth=mouth03&face=face02",
-            surprised: "&eyes=eyes08&mouth=mouth05&face=face03",
-            excited: "&eyes=eyes10&mouth=mouth02&face=face01",
-            stern: "&eyes=eyes04&mouth=mouth01&face=face02"
+            happy: "set_set1",
+            thinking: "set_set2",
+            surprised: "set_set3",
+            excited: "set_set1",
+            stern: "set_set4"
         };
-        return base + (emotions[emotion] || emotions.happy);
+        const set = emotions[emotion] || "set_set1";
+        return `https://robohash.org/NeoCV?size=150x150&${set}`;
     };
 
     const getIcon = () => {

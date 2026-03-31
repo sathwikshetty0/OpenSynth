@@ -17,7 +17,7 @@ const HUDNavigation = () => {
                 </NavLink>
                 <NavLink to="/badges" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
                     <ShieldCheck size={22} />
-                    <span>ACHIEVEMENTS</span>
+                    <span>OPERATOR</span>
                 </NavLink>
             </div>
         </nav>
