@@ -71,6 +71,14 @@ export const missions = [
                 options: ["RGB", "BGR", "CMYK", "HSV"],
                 correctAnswer: "BGR",
                 hint: "Remember: B-G-R, not R-G-B."
+            },
+            {
+                id: "color_2",
+                type: "bug",
+                question: "Fix the conversion constant for Grayscale:",
+                code: "gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)",
+                correctCode: "cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)",
+                hint: "OpenCV's default input is BGR."
             }
         ],
         nextModules: ["blurring_filters"]
@@ -105,6 +113,14 @@ export const missions = [
                 initial: 1,
                 target: 7,
                 hint: "The ksize must be an odd number (1, 3, 5, 7...)."
+            },
+            {
+                id: "blur_2",
+                type: "mcq",
+                question: "Which filter is best for 'salt and pepper' noise?",
+                options: ["Gaussian", "Median", "Bilateral", "Box Filter"],
+                correctAnswer: "Median",
+                hint: "It replaces pixel values with the median of neighbors."
             }
         ],
         nextModules: ["edge_detection"]
@@ -135,6 +151,14 @@ export const missions = [
                 options: ["Canny", "Gaussian", "Sobel", "Haar Cascade"],
                 correctAnswer: "Canny",
                 hint: "It uses double thresholding to detect strong and weak edges."
+            },
+            {
+                id: "edge_2",
+                type: "fill",
+                question: "Complete the Canny function call:",
+                code: "edges = cv2.____(gray, 50, 150)",
+                answer: "Canny",
+                hint: "Named after John F. Canny."
             }
         ],
         nextModules: ["thresholding", "contours"]
@@ -165,6 +189,14 @@ export const missions = [
                 options: ["THRESH_GRAY", "THRESH_BINARY", "THRESH_OTSU", "THRESH_MEAN"],
                 correctAnswer: "THRESH_BINARY",
                 hint: "Binary results in only two values: zero or maximum."
+            },
+            {
+                id: "thresh_2",
+                type: "bug",
+                question: "Correct the threshold function signature:",
+                code: "thresh = cv2.threshold(gray, 127, 255, 'binary')",
+                correctCode: "cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)",
+                hint: "OpenCV uses specific constants starting with cv2.THRESH_"
             }
         ],
         nextModules: ["contours"]
@@ -195,6 +227,14 @@ export const missions = [
                 code: "cnts, h = cv2.____(binary, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)",
                 answer: "findContours",
                 hint: "Used to detect the curves joining all continuous points."
+            },
+            {
+                id: "cont_2",
+                type: "mcq",
+                question: "Which flag is used to approximate and save memory?",
+                options: ["CHAIN_APPROX_NONE", "CHAIN_APPROX_SIMPLE", "RETR_EXTERNAL", "RETR_TREE"],
+                correctAnswer: "CHAIN_APPROX_SIMPLE",
+                hint: "It removes redundant points and compresses the contour."
             }
         ]
     }

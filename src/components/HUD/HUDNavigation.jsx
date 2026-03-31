@@ -8,24 +8,16 @@ const HUDNavigation = () => {
         <nav className="hud-nav">
             <div className="hud-nav-inner">
                 <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
-                    <LayoutDashboard size={20} />
-                    <span>Control</span>
+                    <LayoutDashboard size={22} />
+                    <span>COMMAND</span>
                 </NavLink>
                 <NavLink to="/skill-tree" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
-                    <Network size={20} />
-                    <span>Nodes</span>
-                </NavLink>
-                <NavLink to="/leaderboard" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
-                    <Trophy size={20} />
-                    <span>Intel</span>
+                    <Network size={22} />
+                    <span>MODULES</span>
                 </NavLink>
                 <NavLink to="/badges" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
-                    <ShieldCheck size={20} />
-                    <span>Medals</span>
-                </NavLink>
-                <NavLink to="/settings" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
-                    <Settings size={20} />
-                    <span>Sys</span>
+                    <ShieldCheck size={22} />
+                    <span>ACHIEVEMENTS</span>
                 </NavLink>
             </div>
         </nav>
