@@ -11,15 +11,17 @@ import Leaderboard from './components/Leaderboard';
 import Badges from './components/Badges';
 import Settings from './components/Settings';
 import Certification from './components/Certification/Certification';
+import WelcomeModal from './components/WelcomeModal';
 
 // Context
 export const GameContext = createContext();
 
 function App() {
-    const gameState = useGameState();
+    const { state, setProfile, rank } = useGameState();
+    const { player } = state;
 
     return (
-        <GameContext.Provider value={gameState}>
+        <GameContext.Provider value={{ state, setProfile, rank }}>
             <Router>
                 <div className="app-container">
                     {/* Visual Layers */}
@@ -27,6 +29,15 @@ function App() {
                     <div className="hud-scanlines"></div>
                     <div className="hud-noise"></div>
                     <div className="crt-overlay"></div>
+
+                    <AnimatePresence>
+                        {!player.hasSetProfile && (
+                            <WelcomeModal 
+                                onComplete={(data) => setProfile(data)} 
+                                defaultCodename={player.codename}
+                            />
+                        )}
+                    </AnimatePresence>
 
                     <main className="content">
                         <Routes>
@@ -39,8 +50,8 @@ function App() {
                             <Route path="/settings" element={<Settings />} />
                             <Route path="/certification" element={
                                 <Certification 
-                                    player={gameState.state.player} 
-                                    rank={gameState.rank} 
+                                    player={player} 
+                                    rank={rank} 
                                     onBack={() => window.location.href = '/badges'} 
                                 />
                             } />

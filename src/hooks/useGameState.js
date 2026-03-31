@@ -9,7 +9,8 @@ const INITIAL_STATE = {
         streak: 0,
         imagesProcessed: 0,
         filtersApplied: 0,
-        objectsDetected: 0
+        objectsDetected: 0,
+        hasSetProfile: false
     },
     modulesCompleted: [],
     badges: [],
@@ -20,6 +21,7 @@ const INITIAL_STATE = {
 
 const ACTION_TYPES = {
     ADD_XP: 'ADD_XP',
+    SET_PROFILE: 'SET_PROFILE',
     COMPLETE_MODULE: 'COMPLETE_MODULE',
     UNLOCK_MODULE: 'UNLOCK_MODULE',
     AWARD_BADGE: 'AWARD_BADGE',
@@ -71,6 +73,15 @@ function gameReducer(state, action) {
                 }
             };
         }
+        case ACTION_TYPES.SET_PROFILE:
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    ...action.payload,
+                    hasSetProfile: true
+                }
+            };
         case ACTION_TYPES.COMPLETE_MODULE:
             if (state.modulesCompleted.includes(action.payload)) return state;
             return {
@@ -126,6 +137,7 @@ export function useGameState() {
     }, [state]);
 
     const addXp = (amount) => dispatch({ type: ACTION_TYPES.ADD_XP, payload: amount });
+    const setProfile = (profile) => dispatch({ type: ACTION_TYPES.SET_PROFILE, payload: profile });
     const completeModule = (moduleId) => dispatch({ type: ACTION_TYPES.COMPLETE_MODULE, payload: moduleId });
     const unlockModule = (moduleId) => dispatch({ type: ACTION_TYPES.UNLOCK_MODULE, payload: moduleId });
     const awardBadge = (badgeId) => dispatch({ type: ACTION_TYPES.AWARD_BADGE, payload: badgeId });
@@ -135,6 +147,7 @@ export function useGameState() {
     return {
         state,
         addXp,
+        setProfile,
         completeModule,
         unlockModule,
         awardBadge,
