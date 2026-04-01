@@ -6,7 +6,7 @@ export const missions = [
         difficulty: "Easy",
         estimatedTime: "5 min",
         theory: {
-            goal: "Master how images are represented numerically as matrices and how OpenCV interacts with them.",
+            goal: "Understand how images are represented numerically as matrices and how OpenCV interacts with them.",
             algorithm: "Pixels & Intensity Mapping.",
             code: "import cv2\nimage = cv2.imread('data.png')\n# img[y, x] gives BGR values\nprint(f'Pixel at (0,0): {image[0, 0]}')",
             details: [
@@ -171,7 +171,7 @@ export const missions = [
         estimatedTime: "10 min",
         prerequisites: ["blurring_filters"],
         theory: {
-            goal: "Extract structural features by detecting high gradients in pixel intensity.",
+            goal: "Understand structural features by detecting high gradients in pixel intensity.",
             algorithm: "Canny Multi-Stage Detection.",
             code: "edges = cv2.Canny(img, 100, 200)",
             details: [

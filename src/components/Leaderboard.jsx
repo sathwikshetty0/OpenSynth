@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Leaderboard = () => {
     const players = [
-        { rank: 1, name: "Neural_Ghost", level: 42, xp: 24500, images: 1204 },
+        { rank: 1, name: "Vision_Ghost", level: 42, xp: 24500, images: 1204 },
         { rank: 2, name: "Bit_Striker", level: 38, xp: 19200, images: 850 },
         { rank: 3, name: "Pixel_Hunter", level: 35, xp: 15600, images: 720 },
         { rank: 4, name: "Operator-17", level: 5, xp: 1120, images: 41, isPlayer: true },

@@ -51,7 +51,7 @@ const getLevelXp = (level) => {
 };
 
 const getRank = (level) => {
-    if (level >= 20) return "Master Visionary";
+    if (level >= 20) return "Vision Specialist";
     if (level >= 12) return "Lead Architect";
     if (level >= 8) return "Vision Engineer";
     if (level >= 5) return "Image Analyst";

@@ -309,20 +309,20 @@ export default function Certification({ player, rank, onBack }) {
                     <header className="cert-header">
                         <div>
                             <div className="cert-org-h">OPENCV_QUEST_ACCREDITATION_NODE</div>
-                            <h1 className="cert-title-h">Master of Neural Vision</h1>
+                            <h1 className="cert-title-h">OpenCV Basics Completion</h1>
                             <div style={{ color: '#64748b', fontStyle: 'italic', marginTop: '0.6rem', fontSize: '1rem' }}>
-                                Advanced Computer Vision & Network Perception Protocols
+                                Fundamental Computer Vision & Image Perception Concepts
                             </div>
                         </div>
-                        <div className="cert-badge-h">NEURAL_CORE_V2.5</div>
+                        <div className="cert-badge-h">SYSTEM_CORE_V1.2</div>
                     </header>
 
                     <main className="cert-body-h">
                         <div className="cert-label-h">This document certifies that</div>
                         <h2 className="cert-name-h">{player.codename.toUpperCase()}</h2>
                         <p className="cert-desc-h">
-                            Has successfully completed the high-intensity neural integration protocols of <strong style={{ color: '#0f172a' }}>OPENCV QUEST</strong>. 
-                            Demonstrating elite proficiency in image matrix manipulation, spatial frequency filtering, 
+                            Has successfully completed the fundamental vision learning modules of <strong style={{ color: '#0f172a' }}>OPENCV QUEST</strong>. 
+                            Demonstrating standard proficiency in image matrix manipulation, spatial frequency filtering, 
                             dynamic thresholding, and real-time object perception architecture.
                         </p>
                     </main>

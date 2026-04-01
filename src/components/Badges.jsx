@@ -10,7 +10,7 @@ const Badges = () => {
 
     const badges = [
         { id: 1, name: "First Frame", icon: <Camera />, desc: "Complete your first mission", unlocked: modulesCompleted.length > 0 },
-        { id: 2, name: "Edge Lord", icon: <Zap />, desc: "Master Canny edge detection", unlocked: modulesCompleted.includes('edge_detection') },
+        { id: 2, name: "Edge Lord", icon: <Zap />, desc: "Learn Canny edge detection", unlocked: modulesCompleted.includes('edge_detection') },
         { id: 3, name: "Color Wizard", icon: <Target />, desc: "Calibrate HSV spectral ranges", unlocked: modulesCompleted.includes('color_spaces') },
         { id: 4, name: "Vision Analyst", icon: <Eye />, desc: "Identify contours in a live stream", unlocked: modulesCompleted.includes('contours') },
         { id: 5, name: "System Engineer", icon: <Shield />, desc: "Complete 5 or more modules", unlocked: modulesCompleted.length >= 5 },
