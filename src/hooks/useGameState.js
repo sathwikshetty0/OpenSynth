@@ -51,12 +51,12 @@ const getLevelXp = (level) => {
 };
 
 const getRank = (level) => {
-    if (level >= 20) return "AI Perception Commander";
-    if (level >= 12) return "Vision Architect";
-    if (level >= 8) return "CV Engineer";
-    if (level >= 5) return "Vision Analyst";
-    if (level >= 3) return "Image Operator";
-    return "Pixel Recruit";
+    if (level >= 20) return "Master Visionary";
+    if (level >= 12) return "Lead Architect";
+    if (level >= 8) return "Vision Engineer";
+    if (level >= 5) return "Image Analyst";
+    if (level >= 3) return "Junior Practitioner";
+    return "Vision Student";
 };
 
 function gameReducer(state, action) {
@@ -129,7 +129,15 @@ function gameReducer(state, action) {
 export function useGameState() {
     const [state, dispatch] = useReducer(gameReducer, INITIAL_STATE, (initial) => {
         const saved = localStorage.getItem('opencv_quest_state');
-        return saved ? JSON.parse(saved) : initial;
+        if (!saved) return initial;
+        try {
+            const parsed = JSON.parse(saved);
+            // Deep merge or validation could be added here if needed
+            return { ...initial, ...parsed, player: { ...initial.player, ...parsed.player } };
+        } catch (e) {
+            console.error("Failed to load game state:", e);
+            return initial;
+        }
     });
 
     useEffect(() => {

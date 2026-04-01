@@ -18,18 +18,18 @@ const Settings = () => {
 
             <div className="settings-grid">
                 <section className="settings-section panel">
-                    <h3><Cpu size={18} /> HARDWARE INTERFACE</h3>
+                    <h3><Cpu size={18} /> INTERFACE SETTINGS</h3>
                     <div className="setting-item">
-                        <span>Scanline Opacity</span>
-                        <input type="range" min="0" max="100" defaultValue="10" />
+                        <span>Theme Brightness</span>
+                        <input type="range" min="0" max="100" defaultValue="70" />
                     </div>
                     <div className="setting-item">
-                        <span>Grid Intensity</span>
+                        <span>UI Density</span>
                         <input type="range" min="0" max="100" defaultValue="50" />
                     </div>
                     <div className="setting-item">
-                        <span>Neural Processor</span>
-                        <span className="terminal-text">ACTIVE (v2.4.1)</span>
+                        <span>System Version</span>
+                        <span className="terminal-text">v1.2.0-STABLE</span>
                     </div>
                 </section>
 

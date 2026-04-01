@@ -1,37 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MissionMascot from './MissionMascot';
 
 const IntelExplainer = ({ moduleId, sliderVal }) => {
     const getExplanation = () => {
-        if (sliderVal === 0) return "Simulation idle. Biological systems at rest.";
+        if (sliderVal === 0) return "Simulation ready. Adjust slider to see changes.";
         
         switch (moduleId) {
             case 'images_pixels':
-                return `Boosting intensity to ${sliderVal}. We are manipulating the raw NumPy amplitude. Contrast scaling at ${(100 + sliderVal * 15)}%.`;
+                return `Adjusting image contrast and brightness. Scale level: ${sliderVal}.`;
             case 'color_spaces':
-                return `Shifting hue-rotate by ${sliderVal * 18} degrees. The perception layer is mapping BGR to unconventional spectral frequencies.`;
+                return `Converting color scales. Grayscale conversion at ${sliderVal * 5}%.`;
             case 'blurring_filters':
-                return `Smoothing data peaks. Kernel influence spreading by ${sliderVal * 0.8} sub-pixels. Edge noise is vanishing.`;
+                return `Applying smoothing filters. Kernel size influence: ${sliderVal * 0.8}.`;
             case 'edge_detection':
-                if (sliderVal < 5) return "Gradient mapping active. Seeking sharp intensity shifts.";
-                return `Hysteresis link active! We are inverting the bit-stream at ${sliderVal > 10 ? 'High' : 'Low'} sensitivity.`;
+                return `Detecting intensity gradients. Sensitivity level: ${sliderVal}.`;
             case 'thresholding':
-                return `Binarizing at level ${sliderVal}. All data points below certain luminosity are being purged from the matrix.`;
+                return `Applying binary thresholding at level ${sliderVal}.`;
             case 'contours':
-                return `Topology scan depth: ${sliderVal}. Detecting discrete shapes and mapping vertex hierarchies in the perception layer.`;
+                return `Analyzing shape topology. Contrast level: ${sliderVal}.`;
             default:
-                return "Analyzing neural link data...";
+                return "Analyzing image data...";
         }
     };
 
     return (
-        <div className="neo-explainer-overlay">
-            <MissionMascot 
-                message={getExplanation()} 
-                emotion={sliderVal > 15 ? 'excited' : sliderVal > 8 ? 'thinking' : 'happy'}
-                type="info"
-            />
+        <div className="explainer-box panel">
+            <p>{getExplanation()}</p>
         </div>
     );
 };
@@ -119,9 +113,8 @@ const ConceptVisualizer = ({ moduleId }) => {
                             ) : (
                                 <img src={getModuleImage()} alt="Original" />
                             )}
-                            <div className="scan-line-anim"></div>
                         </div>
-                        <span className="terminal-text">RAW_SENSOR_DATA</span>
+                        <span className="terminal-text">RAW_IMAGE_DATA</span>
                     </div>
 
                     <div className="viz-item">
@@ -132,14 +125,14 @@ const ConceptVisualizer = ({ moduleId }) => {
                                 <img src={getModuleImage()} alt="Processed" />
                             )}
                         </div>
-                        <span className="terminal-text">OPENCV_PERCEPTION_LAYER</span>
+                        <span className="terminal-text">OPENCV_RESULT</span>
                     </div>
                 </div>
 
                 <div className="viz-controls">
                     <div className="control-label">
-                        <label>NEURAL CALIBRATION FLOW</label>
-                        <div className="param-value">LEVEL_{sliderVal.toString().padStart(2, '0')}</div>
+                        <label>CALIBRATION INTENSITY</label>
+                        <div className="param-value">{sliderVal.toString().padStart(2, '0')}</div>
                     </div>
                     <input
                         type="range"

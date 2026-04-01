@@ -47,7 +47,7 @@ const Dashboard = () => {
 
             <section className="xp-section">
                 <div className="xp-header">
-                    <span>NEURAL LINK XP</span>
+                    <span>MISSION PROGRESS</span>
                     <span>{player.xp} / {nextLevelXp} XP</span>
                 </div>
                 <div className="xp-bar-container">
@@ -67,8 +67,8 @@ const Dashboard = () => {
                 transition={{ delay: 0.2 }}
             >
                 <div className="action-content">
-                    <h2>SYSTEM READY</h2>
-                    <p>Your neural-link is stable. Awaiting commands for the next vision training module.</p>
+                    <h2>DASHBOARD READY</h2>
+                    <p>System status is nominal. Ready to begin next learning module.</p>
                 </div>
                 <Link to="/skill-tree" style={{ textDecoration: 'none' }}>
                     <button className="primary-cta-btn">
@@ -97,9 +97,9 @@ const Dashboard = () => {
                 <section className="activity-feed panel">
                     <h2 className="section-title"><Activity size={20} /> ACTIVITY LOGS</h2>
                     <div className="feed-items">
-                        <div className="feed-item terminal-text">
-                            <span className="feed-time">[SYSTEM]</span>
-                            <span className="feed-msg">Biometrics synchronized. Welcome back.</span>
+                        <div className="feed-item">
+                            <span className="feed-time">[LOG]</span>
+                            <span className="feed-msg">Session initialized. Welcome.</span>
                         </div>
                         {state.missionHistory.length === 0 ? (
                             <p className="empty-feed">NO MISSION COMPLETED. AWAITING FIRST DEPLOYMENT.</p>

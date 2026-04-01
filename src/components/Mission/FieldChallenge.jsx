@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MissionMascot from './MissionMascot';
 
 const FieldChallenge = ({ challenge, onComplete, index, total }) => {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -10,14 +9,14 @@ const FieldChallenge = ({ challenge, onComplete, index, total }) => {
     const [mascotMsg, setMascotMsg] = useState('');
 
     useEffect(() => {
-        setMascotMsg(`Challenge ${index + 1} initialized. Objective: ${challenge.type.toUpperCase()}. Awaiting your command input.`);
-    }, [challenge, index]);
+        setMascotMsg(`Challenge ${index + 1} of ${total}`);
+    }, [challenge, index, total]);
 
     useEffect(() => {
         if (isCorrect === true) {
-            setMascotMsg("Command verified. Biological logic confirmed. Access level rising.");
+            setMascotMsg("Correct answer!");
         } else if (isCorrect === false) {
-            setMascotMsg("Access denied. That logic pattern is incompatible with OpenCV standards. Try again.");
+            setMascotMsg("Incorrect answer. Please try again.");
         }
     }, [isCorrect]);
 
@@ -30,7 +29,7 @@ const FieldChallenge = ({ challenge, onComplete, index, total }) => {
             setSelectedOption(null);
             setIsCorrect(null);
             setShowHint(false);
-        }, 2000);
+        }, 1500);
     };
 
     const handleFillSubmit = (e) => {
@@ -45,29 +44,18 @@ const FieldChallenge = ({ challenge, onComplete, index, total }) => {
             setInputValue('');
             setIsCorrect(null);
             setShowHint(false);
-        }, 2000);
+        }, 1500);
     };
 
     return (
         <div className="challenge-phase-layout">
-            <div className="challenge-mascot-side">
-                <MissionMascot 
-                    message={mascotMsg} 
-                    type={isCorrect === true ? 'success' : isCorrect === false ? 'error' : 'info'}
-                    isProactive={isCorrect === false}
-                />
-                
-                {showHint && (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                        <MissionMascot 
-                            message={`HINT_DATA: ${challenge.hint}`}
-                            type="system"
-                        />
-                    </motion.div>
-                )}
-            </div>
-
             <div className="challenge-container panel">
+                <div className="challenge-status-bar">
+                    <span className={isCorrect === true ? 'success' : isCorrect === false ? 'error' : ''}>
+                        {mascotMsg}
+                    </span>
+                    {showHint && <span className="hint-text">Hint: {challenge.hint}</span>}
+                </div>
                 <div className="challenge-header">
                     <span className="terminal-text">CHALLENGE {index + 1} OF {total}</span>
                     <span className="type-tag">{challenge.type.toUpperCase()}</span>

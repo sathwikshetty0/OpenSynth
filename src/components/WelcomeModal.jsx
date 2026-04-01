@@ -27,27 +27,26 @@ const WelcomeModal = ({ onComplete, defaultCodename }) => {
                         <Shield size={32} />
                     </div>
                     <div className="welcome-title">
-                        <span className="terminal-text">SYSTEM_INIT_SUCCESS</span>
-                        <h1>NEURAL LINK STARTUP</h1>
+                        <span className="terminal-text">SYSTEM_READY</span>
+                        <h1>CV LAB INITIALIZATION</h1>
                     </div>
                 </div>
 
                 <div className="welcome-body">
                     <div className="neo-msg">
-                        <img src="https://robohash.org/NeoCV?set_set1" alt="NEO" className="mini-neo" />
-                        <p>"Greetings, prospective Operator. I am NEO. Before we begin the computer vision curriculum, I need to calibrate your digital signature. How should I address you within the core nodes?"</p>
+                        <p>Welcome to the OpenCV Learning Environment. Please enter your preferred name to start the training modules.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="codename-form">
                         <div className="input-field">
-                            <label>OPERATOR_CODENAME</label>
+                            <label>OPERATOR_NAME</label>
                             <div className="input-wrapper">
                                 <Terminal size={18} className="input-icon" />
                                 <input 
                                     type="text" 
                                     value={codename}
                                     onChange={(e) => setCodename(e.target.value)}
-                                    placeholder="Enter identifier..."
+                                    placeholder="Enter your name..."
                                     autoFocus
                                     maxLength={20}
                                 />
@@ -59,7 +58,7 @@ const WelcomeModal = ({ onComplete, defaultCodename }) => {
                             className="start-btn" 
                             disabled={!codename.trim() || isSubmitting}
                         >
-                            {isSubmitting ? 'ESTABLISHING LINK...' : 'ESTABLISH NEURAL LINK'} 
+                            {isSubmitting ? 'STARTING SESSION...' : 'START LEARNING'} 
                             {!isSubmitting && <ChevronRight size={18} />}
                         </button>
                     </form>

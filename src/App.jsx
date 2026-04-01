@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { useGameState } from './hooks/useGameState';
 
 // Components
@@ -24,12 +25,6 @@ function App() {
         <GameContext.Provider value={{ state, setProfile, rank }}>
             <Router>
                 <div className="app-container">
-                    {/* Visual Layers */}
-                    <div className="hud-grid"></div>
-                    <div className="hud-scanlines"></div>
-                    <div className="hud-noise"></div>
-                    <div className="crt-overlay"></div>
-
                     <AnimatePresence>
                         {!player.hasSetProfile && (
                             <WelcomeModal 
