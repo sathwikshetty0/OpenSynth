@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Award } from 'lucide-react';
+import { logCertification } from '../../utils/googleSheets';
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700;800&display=swap');
@@ -299,6 +300,13 @@ export default function Certification({ player, rank, onBack }) {
     [player.codename, player.xp, isoDate]);
 
     const handleExport = () => {
+        logCertification({
+            codename: player.codename,
+            xp: player.xp,
+            rank,
+            certId: authId,
+            date: isoDate,
+        });
         const originalTitle = document.title;
         document.title = `OpenCV_Quest_Cert_${player.codename}`;
         window.print();
