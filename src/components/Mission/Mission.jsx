@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameContext } from '../../App';
 import { missions } from '../../data/missions';
-import { ChevronRight, ChevronLeft, Info, Terminal, Award, Eye } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import { playSound } from '../../utils/soundEffects';
+import { HINT_PENALTY_MULTIPLIER } from '../../constants/xpConfig';
 import IntelBriefing from './IntelBriefing';
 import FieldChallenge from './FieldChallenge';
 import MissionDebrief from './MissionDebrief';
@@ -13,12 +15,11 @@ import './Mission.css';
 const Mission = () => {
     const { moduleId } = useParams();
     const navigate = useNavigate();
-    const { state, addXp, completeModule, unlockModule } = useContext(GameContext);
+    const { addXp, completeModule, unlockModule } = useContext(GameContext);
 
     const mission = missions.find(m => m.id === moduleId);
     const [phase, setPhase] = useState(1); // 1: Intel, 2: Challenges, 3: Debrief
     const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
-    const [score, setScore] = useState(0);
     const [hintsUsedCount, setHintsUsedCount] = useState(0);
     const [earnedXp, setEarnedXp] = useState(0);
 
@@ -27,29 +28,27 @@ const Mission = () => {
     const handleIntelComplete = () => setPhase(2);
 
     const handleChallengeComplete = (isCorrect, wasHintUsed) => {
-        if (!isCorrect) return; // Stay on the current challenge if wrong
+        if (!isCorrect) {
+            playSound.wrong();
+            return;
+        }
 
-        setScore(s => s + 1);
+        playSound.correct();
         if (wasHintUsed) setHintsUsedCount(h => h + 1);
 
         if (currentChallengeIndex < mission.challenges.length - 1) {
             setCurrentChallengeIndex(c => c + 1);
         } else {
-            setPhase(3);
-            // Award XP and complete
-            // Initial score calculation based on first-try correctness could be complex, 
-            // but for now, we just proceed when they get it right.
             let calculatedXp = mission.xpReward;
-            
-            // Penalty for hints used across all challenges
             if (hintsUsedCount > 0 || wasHintUsed) {
-                calculatedXp = Math.floor(calculatedXp * 0.7);
+                calculatedXp = Math.floor(calculatedXp * HINT_PENALTY_MULTIPLIER);
             }
-
             setEarnedXp(calculatedXp);
             addXp(calculatedXp);
             completeModule(mission.id);
             mission.nextModules?.forEach(m => unlockModule(m));
+            playSound.missionComplete();
+            setPhase(3);
         }
     };
 
