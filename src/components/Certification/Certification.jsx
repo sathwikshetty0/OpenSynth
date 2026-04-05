@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Zap, Cpu } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700;800&display=swap');
@@ -277,15 +277,33 @@ const styles = `
   }
 `;
 
+/** Deterministic hash so the same operator always gets the same cert ID. */
+function certHash(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+        h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+    }
+    return Math.abs(h).toString(36).toUpperCase().padStart(8, '0');
+}
+
 export default function Certification({ player, rank, onBack }) {
+    const issuedDate = useMemo(() => new Date().toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+    }).toUpperCase(), []);
+
+    const isoDate = useMemo(() => new Date().toISOString().split('T')[0], []);
+
+    /** Stable ID: changes only if the codename or XP milestone changes. */
+    const authId = useMemo(() =>
+        `CV-${certHash(`${player.codename}:${player.xp}`)}-${isoDate.replace(/-/g, '')}`,
+    [player.codename, player.xp, isoDate]);
+
     const handleExport = () => {
         const originalTitle = document.title;
         document.title = `OpenCV_Quest_Cert_${player.codename}`;
         window.print();
         document.title = originalTitle;
     };
-
-    const authId = `CV_CORE_${Math.random().toString(36).substr(2, 8).toUpperCase()}_V2`;
 
     return (
         <div className="cert-view-page">
@@ -341,7 +359,7 @@ export default function Certification({ player, rank, onBack }) {
                         <div className="cert-field-h" style={{ alignItems: 'flex-end', textAlign: 'right' }}>
                             <span className="cert-field-label">DATE_OF_ENLIGHTENMENT</span>
                             <span className="cert-field-value">
-                                {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}
+                                {issuedDate}
                             </span>
                             <span style={{ fontSize: '0.75rem', color: '#64748b' }}>HASH_AUTH_STABLE</span>
                         </div>
