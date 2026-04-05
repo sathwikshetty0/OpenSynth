@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const FieldChallenge = ({ challenge, onComplete, index, total }) => {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -37,7 +36,7 @@ const FieldChallenge = ({ challenge, onComplete, index, total }) => {
         const expected = challenge.answer || challenge.correctCode;
         if (!expected) return;
 
-        const correct = inputValue.trim().toLowerCase() === expected.toLowerCase();
+        const correct = inputValue.trim().toLowerCase() === expected.trim().toLowerCase();
         setIsCorrect(correct);
         setTimeout(() => {
             onComplete(correct, showHint);
