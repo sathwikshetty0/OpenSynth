@@ -1,4 +1,5 @@
 import { useReducer, useEffect } from 'react';
+import { xpToLevel, getLevelXp, getRank } from '../constants/xpConfig';
 
 const INITIAL_STATE = {
     player: {
@@ -28,35 +29,6 @@ const ACTION_TYPES = {
     UPDATE_STATS: 'UPDATE_STATS',
     USE_HINT: 'USE_HINT',
     RESET: 'RESET'
-};
-
-const xpToLevel = (xp) => {
-    if (xp < 100) return 1;
-    if (xp < 250) return 2;
-    if (xp < 450) return 3;
-    if (xp < 700) return 4;
-    if (xp < 1000) return 5;
-    if (xp < 1500) return 6;
-    if (xp < 2100) return 7;
-    if (xp < 2800) return 8;
-    if (xp < 3600) return 9;
-    if (xp < 4500) return 10;
-    return Math.floor(xp / 500) + 1;
-};
-
-const getLevelXp = (level) => {
-    const levels = [0, 100, 250, 450, 700, 1000, 1500, 2100, 2800, 3600, 4500];
-    if (level < levels.length) return levels[level];
-    return 4500 + (level - 10) * 500;
-};
-
-const getRank = (level) => {
-    if (level >= 20) return "Vision Specialist";
-    if (level >= 12) return "Lead Architect";
-    if (level >= 8) return "Vision Engineer";
-    if (level >= 5) return "Image Analyst";
-    if (level >= 3) return "Junior Practitioner";
-    return "Vision Student";
 };
 
 function gameReducer(state, action) {
@@ -108,7 +80,7 @@ function gameReducer(state, action) {
                     ...action.payload
                 }
             };
-        case ACTION_TYPES.USE_HINT:
+        case ACTION_TYPES.USE_HINT: {
             const { moduleId, challengeId } = action.payload;
             const moduleHints = state.hintsUsed[moduleId] || [];
             if (moduleHints.includes(challengeId)) return state;
@@ -119,6 +91,7 @@ function gameReducer(state, action) {
                     [moduleId]: [...moduleHints, challengeId]
                 }
             };
+        }
         case ACTION_TYPES.RESET:
             return INITIAL_STATE;
         default:
@@ -132,7 +105,6 @@ export function useGameState() {
         if (!saved) return initial;
         try {
             const parsed = JSON.parse(saved);
-            // Deep merge or validation could be added here if needed
             return { ...initial, ...parsed, player: { ...initial.player, ...parsed.player } };
         } catch (e) {
             console.error("Failed to load game state:", e);
@@ -151,6 +123,7 @@ export function useGameState() {
     const awardBadge = (badgeId) => dispatch({ type: ACTION_TYPES.AWARD_BADGE, payload: badgeId });
     const updateStats = (stats) => dispatch({ type: ACTION_TYPES.UPDATE_STATS, payload: stats });
     const useHint = (moduleId, challengeId) => dispatch({ type: ACTION_TYPES.USE_HINT, payload: { moduleId, challengeId } });
+    const reset = () => dispatch({ type: ACTION_TYPES.RESET });
 
     return {
         state,
@@ -161,6 +134,7 @@ export function useGameState() {
         awardBadge,
         updateStats,
         useHint,
+        reset,
         rank: getRank(state.player.level),
         nextLevelXp: getLevelXp(state.player.level)
     };
