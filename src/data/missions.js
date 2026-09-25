@@ -54,6 +54,7 @@ export const missions = [
                 id: "pixels_5",
                 type: "fill",
                 question: "Property to get height and width: image.____",
+                code: "image.____",
                 answer: "shape",
                 hint: "Returns a tuple of dimensions."
             }
@@ -99,6 +100,7 @@ export const missions = [
                 id: "color_3",
                 type: "fill",
                 question: "Function for color conversion: cv2.____(img, flag)",
+                code: "cv2.____(img, flag)",
                 answer: "cvtColor",
                 hint: "Short for 'convert color'."
             },
@@ -287,6 +289,7 @@ export const missions = [
                 id: "cont_3",
                 type: "fill",
                 question: "Function to visualize contours: cv2.____(img, cnts, -1, (0,255,0), 2)",
+                code: "cv2.____(img, cnts, -1, (0,255,0), 2)",
                 answer: "drawContours",
                 hint: "Inverse of finding them, it places them on canvas."
             }
